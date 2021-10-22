@@ -24,7 +24,21 @@ test$conf.int
 library(ggplot2)
 KC <- read.csv(header = TRUE, "https://raw.githubusercontent.com/Warrenkevin/fuzzyatelin.github.io/master/AN588_Fall21/KamilarAndCooperData.csv")
 head(KC)
+```
+```{r}
+Model <- lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean, data = KC)
+summary(Model)
+
+Model2 <-lm(log(MaxLongevity_m) ~ log(Brain_Size_Female_Mean), data = KC)
+summary(Model2)
+```
+```{r}
 ggplot(KC, aes(x=MaxLongevity_m, y=Brain_Size_Species_Mean)) + 
   geom_point()+
-  geom_smooth(method=lm)
+  geom_smooth(method=lm) + geom_text(x=450, y = 300, label = " y = 1.2180x + 248.9523 ")
+```
+```{r}
+ggplot(KC, aes(x=log(MaxLongevity_m), y=log(Brain_Size_Species_Mean))) + 
+  geom_point()+
+  geom_smooth(method=lm) + geom_text(x=2.5, y = 6, label = "y = 0.23976x + 4.86533")
 ```
