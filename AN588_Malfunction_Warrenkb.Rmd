@@ -40,5 +40,5 @@ ggplot(KC, aes(x=MaxLongevity_m, y=Brain_Size_Species_Mean)) +
 ```{r}
 ggplot(KC, aes(x=log(MaxLongevity_m), y=log(Brain_Size_Species_Mean))) + 
   geom_point()+
-  geom_smooth(method=lm) + geom_text(x=2.5, y = 6, label = "y = 0.23976x + 4.86533")
+  geom_smooth(method=lm) + geom_text(x=6.3, y = 2, label = "y = 0.23976x + 4.86533")
 ```
