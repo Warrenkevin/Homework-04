@@ -1,0 +1,30 @@
+---
+title: "Homework 4.0"
+author: "Warrenkevin Henderson"
+date: "22OCT21"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+test <- prop.test(x = c(490, 400), n = c(500, 500))
+test
+k <- prop.test(x = c(490, 400), n = c(500, 500),
+           alternative = "less")
+k
+L <- prop.test(x = c(490, 400), n = c(500, 500),
+              alternative = "greater")
+L
+test$p.value
+test$estimate
+test$conf.int
+```
+```{r}
+library(ggplot2)
+KC <- read.csv(header = TRUE, "https://raw.githubusercontent.com/Warrenkevin/fuzzyatelin.github.io/master/AN588_Fall21/KamilarAndCooperData.csv")
+head(KC)
+ggplot(KC, aes(x=MaxLongevity_m, y=Brain_Size_Species_Mean)) + 
+  geom_point()+
+  geom_smooth(method=lm)
+```
