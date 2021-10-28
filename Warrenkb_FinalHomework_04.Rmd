@@ -1,0 +1,108 @@
+---
+title: "Homework 4.0"
+author: "Warrenkevin Henderson"
+date: "22OCT21"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+test <- prop.test(x = c(490, 400), n = c(500, 500))
+test
+k <- prop.test(x = c(490, 400), n = c(500, 500),
+           alternative = "less")
+k
+L <- prop.test(x = c(490, 400), n = c(500, 500),
+              alternative = "greater")
+L
+test$p.value
+test$estimate
+test$conf.int
+```
+```{r}
+library(ggplot2)
+KC <- read.csv(header = TRUE, "https://raw.githubusercontent.com/Warrenkevin/fuzzyatelin.github.io/master/AN588_Fall21/KamilarAndCooperData.csv")
+head(KC)
+```
+```{r}
+Model <- lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean, data = KC)
+summary(Model)
+Model2 <-lm(log(MaxLongevity_m) ~ log(Brain_Size_Female_Mean), data = KC)
+summary(Model2)
+```
+```{r}
+ggplot(KC, aes(x=MaxLongevity_m, y=Brain_Size_Species_Mean)) + 
+  geom_point()+
+  geom_smooth(method=lm) + geom_text(x=450, y = 300, label = " y = 1.2180x + 248.9523 ")
+```
+```{r}
+ggplot(KC, aes(x=log(MaxLongevity_m), y=log(Brain_Size_Species_Mean))) + 
+  geom_point()+
+  geom_smooth(method=lm) + geom_text(x=6.3, y = 2, label = "y = 0.23976x + 4.86533")
+```
+
+```{r}
+model1 <- lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean)
+summary(model1)
+
+x <- KC$Brain_Size_Species_Mean
+y <- KC$MaxLongevity_m
+
+
+conf_interval <- predict(model1, newdata = data.frame(Brain_Size_Species_Mean = x),, interval = "confidence", level = 0.90)
+
+colnames(conf_interval) <-c("Fit_C","Lower_C","Upper_C")
+
+
+head(conf_interval)
+summary(KC$MaxLongevity_m)
+pred_interval <- predict(model1, newdata = data.frame(Brain_Size_Species_Mean = x),, interval = "prediction", level = 0.90)
+
+colnames(pred_interval) <-c("Fit_P","Lower_P","Upper_P")
+
+```
+```{r}
+head(pred_interval)
+mydata <- data.frame(cbind(x,y, conf_interval, pred_interval))
+head(mydata)
+
+```
+```{r}
+
+ggplot(mydata, aes(x = x, y = y)) + theme_minimal() +
+          geom_point() + labs(x = "log(Mean Species Brain Size)", y = "log(Max Longevity)", size = 14) +
+          geom_line(aes(x = x, y = Fit_C, color = "Confidence")) +
+          geom_line(aes(x = x, y = Lower_C, color = "Confidence")) +
+          geom_line(aes(x = x, y = Upper_C, color = "Confidence")) + geom_smooth(method=lm) 
+
+```
+
+```{r}
+```
+
+```{r}
+confint(model1)
+```
+
+```{r}
+p <- 
+  ggplot(KC, aes(x=MaxLongevity_m, y=Brain_Size_Species_Mean))+geom_point(size=2, alpha=0.5) +
+  xlab("MaxLongevity_m") +
+  ylab("Brain_Size_Species_Mean")+
+  stat_smooth(
+    aes(color="Line of Best Fit", fill="Confidence Interval"),
+    method = "lm",  formula = y~x, size = 1,
+    level = 0.90, alpha=0.5
+  )+
+  theme_light() +
+  ggtitle("Regression") 
+p
+````
+```{r}
+summary(lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean))
+r <- residuals(lm(KC$MaxLongevity_m~KC$Brain_Size_Species_Mean))
+sqrt(sum(r^2/126))
+
+```
+### I faced a lot of challanges during this homework. It was hard to get the prediction interval and confidence interval on the same graph. I was not to sure how to do a Z-test. I am still not sure on how to do a point estimate and if it is correct
