@@ -1,13 +1,41 @@
 ---
-title: "Homework 4.00"
+title: "Homework 4.0"
 author: "Warrenkevin Henderson"
 date: "22OCT21"
 output:
   html_document: default
   pdf_document: default
 ---
-
 ```{r}
+z.prop.test <-function(p1,n1,p0,p2=NULL,n2=NULL, conf.level=0.95,alternative="two.sided") {
+   if(p1 == 0){
+    return(0)}
+    else {if((n1 * p1 < 5) | (n1 * (1-p1) > 5)){
+          return(c("Not Normal", (p1-p0) / sqrt((p0 * (1-p0))/n1)))}
+          else(return((p1-p0) / sqrt((p0 * (1-p0))/n1)))
+    }}
+
+z.prop.test.2 <-function(p1,n1,p0,p2, n2, conf.level=0.95,alternative="two.sided") {
+   if(p1 == 0){
+    return(0)}
+    else {if((n1 * p1 < 5) | (n1 * (1-p1) > 5)){
+          return(c("Not Normal again", (p1-p0) / sqrt((p0 * (1-p0))/n1)))}
+          else(return((p1-p0) / sqrt((p0 * (1-p0))/n1)))
+    }}
+
+z.prop.test.2 <-function(p1,n1,p0,p2, n2, conf.level=0.95,alternative="two.sided") {
+   if(p2 == 0){
+    return(0)}
+    else {if((n1 * p2 < 5) | (n2 * (1-p2) > 5)){
+          return(c("Not Normal again, again", (p2-p0) / sqrt((p0 * (1-p0))/n1)))}
+          else(return((p2-p0) / sqrt((p0 * (1-p0))/n2)))
+    }}
+ z.prop.test(p1 = 0.6, n1 = 30, p0 = 0.5, conf.level = 0.95) 
+    z.prop.test(p1 = 0.6, n1 = 5, p0 = 0.5, alternative = "less", conf.level = 0.95)
+    z.prop.test(p1 = 0.6, n1 = 30, p0 = 0, p2 = 0.8, n2 = 25, conf.level = 0.95)
+    z.prop.test(p1 = 0.6, n1 = 30, p0 = 0.4, n2 = 25, conf.level = 0.95)
+    z.prop.test(p1 = 0.6, n1 = 50, p0 = 0, p2 = 0.8, n2 = 60, alternative = "greater", conf.level = 0.95)
+
 ```
 ```{r}
 library(ggplot2)
@@ -63,7 +91,8 @@ ggplot(mydata, aes(x = x, y = y)) + theme_minimal() +
           geom_point() + labs(x = "log(Mean Species Brain Size)", y = "log(Max Longevity)", size = 14) +
           geom_line(aes(x = x, y = Fit_C, color = "Confidence")) +
           geom_line(aes(x = x, y = Lower_C, color = "Confidence")) +
-          geom_line(aes(x = x, y = Upper_C, color = "Confidence")) + geom_smooth(method=lm) 
+          geom_line(aes(x = x, y = Upper_C, color = "Confidence")) + geom_line(aes(x = x, y = Fit_P, color = "Confidence"))  + geom_line(aes(x = x, y = Lower_P, color = "Confidence")) +
+          geom_line(aes(x = x, y = Upper_P, color = "Confidence"))+ geom_smooth(method=lm) 
 
 ```
 
@@ -93,5 +122,10 @@ summary(lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean))
 r <- residuals(lm(KC$MaxLongevity_m~KC$Brain_Size_Species_Mean))
 sqrt(sum(r^2/126))
 
+PR <- predict(KC, newdata = data.frame(Brain_Size_Species_Mean = 800), interval = "prediction", 
+    level = 0.9)
+PR
 ```
-### I faced a lot of challanges during this homework. It was hard to get the prediction interval and confidence interval on the same graph. I was not to sure how to do a Z-test. I am still not sure on how to do a point estimate and if it is correct
+
+```
+### I faced a lot of challanges during this homework. It was hard to get the prediction interval and confidence interval on the same graph. I was not to sure how to do a Z-test. I am still not sure on how to do a point estimate and if it is correct, or not. I still do not understand the Z-test. I have read up on it but still get confused.I also had issues with the aes() function
