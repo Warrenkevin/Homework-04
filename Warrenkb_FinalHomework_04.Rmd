@@ -8,17 +8,6 @@ output:
 ---
 
 ```{r}
-test <- prop.test(x = c(490, 400), n = c(500, 500))
-test
-k <- prop.test(x = c(490, 400), n = c(500, 500),
-           alternative = "less")
-k
-L <- prop.test(x = c(490, 400), n = c(500, 500),
-              alternative = "greater")
-L
-test$p.value
-test$estimate
-test$conf.int
 ```
 ```{r}
 library(ggplot2)
