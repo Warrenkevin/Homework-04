@@ -1,5 +1,9 @@
 ---
+<<<<<<< HEAD
 title: "Homework 4"
+=======
+title: "Homework 4.0"
+>>>>>>> 2de21fa75be7630500bef68749cb2d3bebeba6e4
 author: "Warrenkevin Henderson"
 date: "22OCT21"
 output:
