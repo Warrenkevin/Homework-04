@@ -95,8 +95,8 @@ ggplot(mydata, aes(x = x, y = y)) + theme_minimal() +
           geom_point() + labs(x = "log(Mean Species Brain Size)", y = "log(Max Longevity)", size = 14) +
           geom_line(aes(x = x, y = Fit_C, color = "Confidence")) +
           geom_line(aes(x = x, y = Lower_C, color = "Confidence")) +
-          geom_line(aes(x = x, y = Upper_C, color = "Confidence")) + geom_line(aes(x = x, y = Fit_P, color = "Confidence"))  + geom_line(aes(x = x, y = Lower_P, color = "Confidence")) +
-          geom_line(aes(x = x, y = Upper_P, color = "Confidence"))+ geom_smooth(method=lm) 
+          geom_line(aes(x = x, y = Upper_C, color = "Confidence")) + geom_line(aes(x = x, y = Fit_P, color = "Prediction"))  + geom_line(aes(x = x, y = Lower_P, color = "Prediction")) +
+          geom_line(aes(x = x, y = Upper_P, color = "Prediction"))+ geom_smooth(method=lm) 
 
 ```
 
