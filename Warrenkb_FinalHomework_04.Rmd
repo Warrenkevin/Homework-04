@@ -66,6 +66,8 @@ ggplot(KC, aes(x=log(MaxLongevity_m), y=log(Brain_Size_Species_Mean))) +
   geom_smooth(method=lm) + geom_text(x=6.3, y = 2, label = "y = 0.23976x + 4.86533")
 ```
 
+*How do you interpret the coefficients from your model cummary?*
+
 ```{r}
 model1 <- lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean)
 summary(model1)
@@ -103,6 +105,7 @@ ggplot(mydata, aes(x = x, y = y)) + theme_minimal() +
 
 ```
 
+*You got it! Beautiful!*
 ```{r}
 ```
 
@@ -124,6 +127,7 @@ p <-
   ggtitle("Regression") 
 p
 ````
+
 ```{r}
 summary(lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean))
 r <- residuals(lm(KC$MaxLongevity_m~KC$Brain_Size_Species_Mean))
@@ -133,6 +137,8 @@ PR <- predict(KC, newdata = data.frame(Brain_Size_Species_Mean = 800), interval 
     level = 0.9)
 PR
 ```
+*This is all right, but your first variable should be the model object. So:* 
+predict(model1, newdata = data.frame(Brain_Size_Species_Mean = 800), interval = "prediction", level = 0.9)  
 
 ```
 ### I faced a lot of challanges during this homework. It was hard to get the prediction interval and confidence interval on the same graph. I was not to sure how to do a Z-test. I am still not sure on how to do a point estimate and if it is correct, or not. I still do not understand the Z-test. I have read up on it but still get confused.I also had issues with the aes() function
