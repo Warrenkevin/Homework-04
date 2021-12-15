@@ -41,6 +41,9 @@ z.prop.test.2 <-function(p1,n1,p0,p2, n2, conf.level=0.95,alternative="two.sided
     z.prop.test(p1 = 0.6, n1 = 50, p0 = 0, p2 = 0.8, n2 = 60, alternative = "greater", conf.level = 0.95)
 
 ```
+
+*you should be able to make one function defining all variables, for the one and two sample test (for one sample, you will set: if (is.null(p2) == TRUE || is.null(n2) == TRUE)) and your "else" will be when they are not null (i.e. you have p2 and n2 values) then define the upper and lower CI for when p2 and n2 are and are not null.*
+
 ```{r}
 library(ggplot2)
 KC <- read.csv(header = TRUE, "https://raw.githubusercontent.com/Warrenkevin/fuzzyatelin.github.io/master/AN588_Fall21/KamilarAndCooperData.csv")
@@ -62,6 +65,8 @@ ggplot(KC, aes(x=log(MaxLongevity_m), y=log(Brain_Size_Species_Mean))) +
   geom_point()+
   geom_smooth(method=lm) + geom_text(x=6.3, y = 2, label = "y = 0.23976x + 4.86533")
 ```
+
+*How do you interpret the coefficients from your model cummary?*
 
 ```{r}
 model1 <- lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean)
@@ -100,6 +105,7 @@ ggplot(mydata, aes(x = x, y = y)) + theme_minimal() +
 
 ```
 
+*You got it! Beautiful!*
 ```{r}
 ```
 
@@ -121,6 +127,7 @@ p <-
   ggtitle("Regression") 
 p
 ````
+
 ```{r}
 summary(lm(KC$MaxLongevity_m ~ KC$Brain_Size_Species_Mean))
 r <- residuals(lm(KC$MaxLongevity_m~KC$Brain_Size_Species_Mean))
@@ -130,6 +137,8 @@ PR <- predict(KC, newdata = data.frame(Brain_Size_Species_Mean = 800), interval 
     level = 0.9)
 PR
 ```
+*This is all right, but your first variable should be the model object. So:* 
+predict(model1, newdata = data.frame(Brain_Size_Species_Mean = 800), interval = "prediction", level = 0.9)  
 
 ```
 ### I faced a lot of challanges during this homework. It was hard to get the prediction interval and confidence interval on the same graph. I was not to sure how to do a Z-test. I am still not sure on how to do a point estimate and if it is correct, or not. I still do not understand the Z-test. I have read up on it but still get confused.I also had issues with the aes() function
